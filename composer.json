@@ -1,0 +1,46 @@
+{
+    "name": "timur-turdyev/seotools",
+    "description": "Framework-agnostic SEO head markup builder: meta, Open Graph, Twitter/X Cards and JSON-LD, with a lazy Laravel integration layer.",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "seo",
+        "meta",
+        "open-graph",
+        "twitter-cards",
+        "json-ld",
+        "schema-org",
+        "laravel"
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^9.0",
+        "pestphp/pest": "^2.34",
+        "pestphp/pest-plugin-laravel": "^2.3",
+        "phpstan/phpstan": "^1.10"
+    },
+    "suggest": {
+        "illuminate/support": "Required to use the Laravel integration layer (service provider, facade, Blade output)."
+    },
+    "autoload": {
+        "psr-4": {
+            "TimurTurdyev\\Seotools\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TimurTurdyev\\Seotools\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
