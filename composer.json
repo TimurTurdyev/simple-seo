@@ -28,7 +28,10 @@
     "autoload": {
         "psr-4": {
             "TimurTurdyev\\Seotools\\": "src/"
-        }
+        },
+        "files": [
+            "src/Laravel/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -40,6 +43,16 @@
             "pestphp/pest-plugin": true
         },
         "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TimurTurdyev\\Seotools\\Laravel\\SeotoolsServiceProvider"
+            ],
+            "aliases": {
+                "Seo": "TimurTurdyev\\Seotools\\Laravel\\Facades\\Seo"
+            }
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true
