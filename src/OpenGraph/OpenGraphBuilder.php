@@ -159,6 +159,38 @@ final class OpenGraphBuilder implements Section
     }
 
     /**
+     * Report where each rendered scalar value came from: 'page' or 'default'.
+     *
+     * @return array<string, string>
+     */
+    public function sources(): array
+    {
+        $sources = [];
+
+        foreach (['title' => $this->title, 'description' => $this->description, 'url' => $this->url] as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $sources[$field] = 'page';
+            }
+        }
+
+        $resolved = [
+            'type' => [$this->type, $this->defaultType],
+            'site_name' => [$this->siteName, $this->defaultSiteName],
+            'locale' => [$this->locale, $this->defaultLocale],
+        ];
+
+        foreach ($resolved as $field => [$value, $default]) {
+            $final = $this->resolve($value, $default);
+
+            if ($final !== null && $final !== '') {
+                $sources[$field] = $value !== null ? 'page' : 'default';
+            }
+        }
+
+        return $sources;
+    }
+
+    /**
      * @param  list<string>  $tags
      */
     private function push(array &$tags, string $property, ?string $content): void

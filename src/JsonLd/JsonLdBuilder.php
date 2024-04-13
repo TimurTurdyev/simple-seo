@@ -56,6 +56,11 @@ final class JsonLdBuilder implements Section
         return '<script type="application/ld+json">' . $json . '</script>';
     }
 
+    public function count(): int
+    {
+        return count($this->entities);
+    }
+
     public function reset(): void
     {
         $this->entities = [];

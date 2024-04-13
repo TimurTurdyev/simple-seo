@@ -115,6 +115,38 @@ final class TwitterCardBuilder implements Section
         $this->withoutDefaults = false;
     }
 
+    /**
+     * Report where each rendered value came from: 'page' or 'default'.
+     * Empty when the section renders nothing (no explicit state).
+     *
+     * @return array<string, string>
+     */
+    public function sources(): array
+    {
+        if (! $this->hasExplicitState()) {
+            return [];
+        }
+
+        $sources = [];
+
+        if (($this->card ?? ($this->withoutDefaults ? null : $this->defaultCard)) !== null) {
+            $sources['card'] = $this->card !== null ? 'page' : 'default';
+        }
+
+        $site = $this->site ?? ($this->withoutDefaults ? null : $this->defaultSite);
+        if ($site !== null && $site !== '') {
+            $sources['site'] = $this->site !== null ? 'page' : 'default';
+        }
+
+        foreach (['creator' => $this->creator, 'title' => $this->title, 'description' => $this->description, 'image' => $this->image] as $field => $value) {
+            if ($value !== null && $value !== '') {
+                $sources[$field] = 'page';
+            }
+        }
+
+        return $sources;
+    }
+
     private function hasExplicitState(): bool
     {
         return $this->card !== null

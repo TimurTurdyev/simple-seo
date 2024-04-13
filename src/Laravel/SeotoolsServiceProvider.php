@@ -61,7 +61,10 @@ final class SeotoolsServiceProvider extends ServiceProvider
         ], 'seotools-config');
 
         Blade::directive('seo', function (): string {
-            return '<?php echo app(\TimurTurdyev\Seotools\SeoManager::class)->render(); ?>';
+            return '<?php $__seotools = app(\TimurTurdyev\Seotools\SeoManager::class); '
+                . 'echo $__seotools->render(); '
+                . 'if (config(\'app.debug\') === true) { echo "\n" . $__seotools->debugComment(); } '
+                . 'unset($__seotools); ?>';
         });
     }
 }

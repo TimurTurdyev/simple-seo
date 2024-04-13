@@ -145,6 +145,33 @@ final class SeoManager
         return implode("\n", $fragments);
     }
 
+    /**
+     * Development helper: an HTML comment describing where every rendered
+     * value came from (page or default) without exposing the values.
+     */
+    public function debugComment(): string
+    {
+        $parts = [];
+
+        foreach ($this->meta->sources() as $field => $source) {
+            $parts[] = "meta.{$field}={$source}";
+        }
+
+        foreach ($this->openGraph->sources() as $field => $source) {
+            $parts[] = "og.{$field}={$source}";
+        }
+
+        foreach ($this->twitterCard->sources() as $field => $source) {
+            $parts[] = "twitter.{$field}={$source}";
+        }
+
+        if ($this->jsonLd->count() > 0) {
+            $parts[] = 'jsonld.entities=' . $this->jsonLd->count();
+        }
+
+        return '<!-- seotools: ' . ($parts === [] ? 'empty' : implode(', ', $parts)) . ' -->';
+    }
+
     public function reset(): void
     {
         $this->meta->reset();

@@ -208,6 +208,26 @@ final class MetaBuilder implements Section
     }
 
     /**
+     * Report where each rendered value came from: 'page' or 'default'.
+     *
+     * @return array<string, string>
+     */
+    public function sources(): array
+    {
+        $sources = [];
+
+        if ($this->resolve($this->title, $this->defaultTitle) !== null) {
+            $sources['title'] = $this->title !== null ? 'page' : 'default';
+        }
+
+        if ($this->resolve($this->description, $this->defaultDescription) !== null) {
+            $sources['description'] = $this->description !== null ? 'page' : 'default';
+        }
+
+        return $sources;
+    }
+
+    /**
      * Resolve a scalar against its config default at render time.
      *
      * An explicit empty string is kept as state (it suppresses the tag) and
