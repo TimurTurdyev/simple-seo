@@ -3,6 +3,12 @@
     "description": "Framework-agnostic SEO head markup builder: meta, Open Graph, Twitter/X Cards and JSON-LD, with a lazy Laravel integration layer.",
     "license": "MIT",
     "type": "library",
+    "authors": [
+        {
+            "name": "Timur Turdyev",
+            "email": "mercurioplatform@gmail.com"
+        }
+    ],
     "keywords": [
         "seo",
         "meta",
