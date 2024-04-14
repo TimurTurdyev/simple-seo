@@ -44,6 +44,11 @@
         },
         "sort-packages": true
     },
+    "scripts": {
+        "test": "pest",
+        "analyse": "phpstan analyse",
+        "lint": "pint --test"
+    },
     "extra": {
         "laravel": {
             "providers": [
