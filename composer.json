@@ -18,6 +18,11 @@
         "schema-org",
         "laravel"
     ],
+    "homepage": "https://github.com/TimurTurdyev/seotools",
+    "support": {
+        "issues": "https://github.com/TimurTurdyev/seotools/issues",
+        "source": "https://github.com/TimurTurdyev/seotools"
+    },
     "require": {
         "php": "^8.2"
     },
