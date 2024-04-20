@@ -1,3 +1,5 @@
+![seotools](.github/banner.svg)
+
 # seotools
 
 Head markup builder for PHP: meta, Open Graph, Twitter/X cards, JSON-LD.
