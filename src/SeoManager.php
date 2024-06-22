@@ -18,6 +18,12 @@ final class SeoManager
         private readonly TwitterCardBuilder $twitterCard,
         private readonly JsonLdBuilder $jsonLd,
     ) {
+        $this->jsonLd->setPageProvider(fn (): array => [
+            'title' => $this->meta->resolvedTitle(withSuffix: false),
+            'description' => $this->meta->resolvedDescription(),
+            'images' => $this->openGraph->imageUrls(),
+            'canonical' => $this->meta->canonicalUrl(),
+        ]);
     }
 
     public function meta(): MetaBuilder

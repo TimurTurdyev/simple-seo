@@ -157,12 +157,12 @@ final class MetaBuilder implements Section
     {
         $tags = [];
 
-        $title = $this->resolveTitle();
+        $title = $this->resolvedTitle();
         if ($title !== null) {
             $tags[] = '<title>' . Escaper::html($title) . '</title>';
         }
 
-        $description = $this->resolve($this->description, $this->defaultDescription);
+        $description = $this->resolvedDescription();
         if ($description !== null) {
             $tags[] = '<meta name="description" content="' . Escaper::html($description) . '">';
         }
@@ -228,6 +228,33 @@ final class MetaBuilder implements Section
     }
 
     /**
+     * The title as it will render: page value or config default.
+     */
+    public function resolvedTitle(bool $withSuffix = true): ?string
+    {
+        $title = $this->resolve($this->title, $this->defaultTitle);
+
+        if ($title === null) {
+            return null;
+        }
+
+        return $withSuffix ? $title . ($this->titleSuffix ?? '') : $title;
+    }
+
+    /**
+     * The description as it will render: page value or config default.
+     */
+    public function resolvedDescription(): ?string
+    {
+        return $this->resolve($this->description, $this->defaultDescription);
+    }
+
+    public function canonicalUrl(): ?string
+    {
+        return $this->isFilled($this->canonical) ? $this->canonical : null;
+    }
+
+    /**
      * Resolve a scalar against its config default at render time.
      *
      * An explicit empty string is kept as state (it suppresses the tag) and
@@ -238,17 +265,6 @@ final class MetaBuilder implements Section
         $resolved = $value ?? ($this->withoutDefaults ? null : $default);
 
         return ($resolved === null || $resolved === '') ? null : $resolved;
-    }
-
-    private function resolveTitle(): ?string
-    {
-        $title = $this->resolve($this->title, $this->defaultTitle);
-
-        if ($title === null) {
-            return null;
-        }
-
-        return $title . ($this->titleSuffix ?? '');
     }
 
     private function robotsContent(): string

@@ -115,6 +115,14 @@ final class OpenGraphBuilder implements Section
         return $this;
     }
 
+    /**
+     * @return list<string>
+     */
+    public function imageUrls(): array
+    {
+        return array_map(static fn (array $image): string => $image['url'], $this->images);
+    }
+
     public function render(): string
     {
         $tags = [];

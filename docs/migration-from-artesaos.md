@@ -6,7 +6,7 @@ New API, no compat layer. Old calls map like this:
 
 `OpenGraph::addImage` is `seo()->image()` (fills twitter too) or `openGraph()->image()` with width/height/alt. `addProperty` is `openGraph()->property()`. Twitter setters live on `twitterCard()`, card type is an enum now.
 
-JsonLd and JsonLdMulti are gone. Call `seo()->jsonLd()->add()` once per entity, either with an array or a `Schema::` builder. No current block, no phantom first block. `SEOTools::generate()` in the layout becomes the `@seo` directive.
+JsonLd and JsonLdMulti are gone. Call `seo()->jsonLd()->add()` once per entity, either with an array or a `Schema::` builder. No current block, no phantom first block. `SEOTools::generate()` in the layout becomes the `@seo` directive. The `jsonLdMulti()->setType('Product')` plus repeated `setTitle`/`setDescription` pattern collapses into `jsonLd()->fromPage('Product', $overrides)`: it reads the already set title, description, image and canonical at render time, extra fields like offers go into the second argument.
 
 Config keys move from `meta.defaults.title` style to `meta.title.default`, `meta.title.suffix`, `meta.description.default`, `open_graph.site_name`, `open_graph.type`, `twitter.card`, `twitter.site`.
 
