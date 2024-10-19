@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
 
 it('renders nothing when empty', function (): void {
     expect((new JsonLdBuilder())->render())->toBe('');

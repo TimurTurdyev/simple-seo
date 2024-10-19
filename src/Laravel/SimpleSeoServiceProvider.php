@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Laravel;
+namespace TimurTurdyev\SimpleSeo\Laravel;
 
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\SeoManager;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardType;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\SeoManager;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardType;
 
-final class SeotoolsServiceProvider extends ServiceProvider
+final class SimpleSeoServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/seotools.php', 'seotools');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/simple-seo.php', 'simple-seo');
 
         // Scoped, not singleton: the container flushes scoped instances
         // between requests, which keeps state clean under Octane.
@@ -30,7 +30,7 @@ final class SeotoolsServiceProvider extends ServiceProvider
              *     twitter: array{card: ?string, site: ?string}
              * } $config
              */
-            $config = $app->make(Repository::class)->get('seotools');
+            $config = $app->make(Repository::class)->get('simple-seo');
 
             $card = $config['twitter']['card'];
 
@@ -57,14 +57,14 @@ final class SeotoolsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../../config/seotools.php' => config_path('seotools.php'),
-        ], 'seotools-config');
+            __DIR__ . '/../../config/simple-seo.php' => config_path('simple-seo.php'),
+        ], 'simple-seo-config');
 
         Blade::directive('seo', function (): string {
-            return '<?php $__seotools = app(\TimurTurdyev\Seotools\SeoManager::class); '
-                . 'echo $__seotools->render(); '
-                . 'if (config(\'app.debug\') === true) { echo "\n" . $__seotools->debugComment(); } '
-                . 'unset($__seotools); ?>';
+            return '<?php $__simpleSeo = app(\TimurTurdyev\SimpleSeo\SeoManager::class); '
+                . 'echo $__simpleSeo->render(); '
+                . 'if (config(\'app.debug\') === true) { echo "\n" . $__simpleSeo->debugComment(); } '
+                . 'unset($__simpleSeo); ?>';
         });
     }
 }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Tests;
+namespace TimurTurdyev\SimpleSeo\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use TimurTurdyev\Seotools\Laravel\SeotoolsServiceProvider;
+use TimurTurdyev\SimpleSeo\Laravel\SimpleSeoServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -15,6 +15,6 @@ abstract class TestCase extends Orchestra
      */
     protected function getPackageProviders($app): array
     {
-        return [SeotoolsServiceProvider::class];
+        return [SimpleSeoServiceProvider::class];
     }
 }

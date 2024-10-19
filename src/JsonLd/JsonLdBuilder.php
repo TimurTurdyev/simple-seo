@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\JsonLd;
+namespace TimurTurdyev\SimpleSeo\JsonLd;
 
 use Closure;
 use JsonSerializable;
-use TimurTurdyev\Seotools\Contracts\Section;
+use TimurTurdyev\SimpleSeo\Contracts\Section;
 
 final class JsonLdBuilder implements Section
 {

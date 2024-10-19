@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools;
+namespace TimurTurdyev\SimpleSeo;
 
 use JsonSerializable;
 

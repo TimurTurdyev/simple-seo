@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\SeoManager;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\SeoManager;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 
 function manager(): SeoManager
 {

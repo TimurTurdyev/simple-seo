@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Meta;
+namespace TimurTurdyev\SimpleSeo\Meta;
 
 enum MaxImagePreview: string
 {

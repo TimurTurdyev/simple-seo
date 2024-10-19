@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
 
 it('renders nothing when empty', function (): void {
     expect((new OpenGraphBuilder())->render())->toBe('');

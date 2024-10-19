@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardType;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardType;
 
 it('renders nothing when empty', function (): void {
     expect((new TwitterCardBuilder())->render())->toBe('');

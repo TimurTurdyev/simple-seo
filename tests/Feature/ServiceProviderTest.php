@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\SeoManager;
+use TimurTurdyev\SimpleSeo\SeoManager;
 
 it('resolves the seo manager from the container', function (): void {
     expect(app(SeoManager::class))->toBeInstanceOf(SeoManager::class);
 });
 
 it('passes config defaults into the builders', function (): void {
-    config()->set('seotools.meta.title.default', 'Default Title');
-    config()->set('seotools.meta.title.suffix', ' - Site');
-    config()->set('seotools.open_graph.site_name', 'Example');
-    config()->set('seotools.twitter.card', 'summary_large_image');
-    config()->set('seotools.twitter.site', '@example');
+    config()->set('simple-seo.meta.title.default', 'Default Title');
+    config()->set('simple-seo.meta.title.suffix', ' - Site');
+    config()->set('simple-seo.open_graph.site_name', 'Example');
+    config()->set('simple-seo.twitter.card', 'summary_large_image');
+    config()->set('simple-seo.twitter.site', '@example');
 
     $html = app(SeoManager::class)->render();
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
 it('renders an explicit title', function (): void {
     $meta = (new MetaBuilder())->title('Hello');

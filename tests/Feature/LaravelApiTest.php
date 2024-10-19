@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Blade;
-use TimurTurdyev\Seotools\Laravel\Facades\Seo;
-use TimurTurdyev\Seotools\SeoManager;
+use TimurTurdyev\SimpleSeo\Laravel\Facades\Seo;
+use TimurTurdyev\SimpleSeo\SeoManager;
 
 it('works through the facade', function (): void {
     Seo::title('Facade Page');

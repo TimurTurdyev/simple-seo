@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Meta;
+namespace TimurTurdyev\SimpleSeo\Meta;
 
-use TimurTurdyev\Seotools\Contracts\Section;
-use TimurTurdyev\Seotools\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Contracts\Section;
+use TimurTurdyev\SimpleSeo\Support\Escaper;
 
 final class MetaBuilder implements Section
 {

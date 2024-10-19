@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools;
+namespace TimurTurdyev\SimpleSeo;
 
-use TimurTurdyev\Seotools\Contracts\HasSeo;
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\Contracts\HasSeo;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 
 final class SeoManager
 {
@@ -175,7 +175,7 @@ final class SeoManager
             $parts[] = 'jsonld.entities=' . $this->jsonLd->count();
         }
 
-        return '<!-- seotools: ' . ($parts === [] ? 'empty' : implode(', ', $parts)) . ' -->';
+        return '<!-- simple-seo: ' . ($parts === [] ? 'empty' : implode(', ', $parts)) . ' -->';
     }
 
     public function reset(): void

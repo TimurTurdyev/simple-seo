@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Support;
+namespace TimurTurdyev\SimpleSeo\Support;
 
 final class Escaper
 {

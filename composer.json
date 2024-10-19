@@ -1,5 +1,5 @@
 {
-    "name": "timur-turdyev/seotools",
+    "name": "timurturdyev/simple-seo",
     "description": "Framework-agnostic SEO head markup builder: meta, Open Graph, Twitter/X Cards and JSON-LD, with a lazy Laravel integration layer.",
     "license": "MIT",
     "type": "library",
@@ -18,10 +18,10 @@
         "schema-org",
         "laravel"
     ],
-    "homepage": "https://github.com/TimurTurdyev/seotools",
+    "homepage": "https://github.com/TimurTurdyev/simple-seo",
     "support": {
-        "issues": "https://github.com/TimurTurdyev/seotools/issues",
-        "source": "https://github.com/TimurTurdyev/seotools"
+        "issues": "https://github.com/TimurTurdyev/simple-seo/issues",
+        "source": "https://github.com/TimurTurdyev/simple-seo"
     },
     "require": {
         "php": "^8.2"
@@ -38,7 +38,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TimurTurdyev\\Seotools\\": "src/"
+            "TimurTurdyev\\SimpleSeo\\": "src/"
         },
         "files": [
             "src/Laravel/helpers.php"
@@ -46,7 +46,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TimurTurdyev\\Seotools\\Tests\\": "tests/"
+            "TimurTurdyev\\SimpleSeo\\Tests\\": "tests/"
         }
     },
     "config": {
@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TimurTurdyev\\Seotools\\Laravel\\SeotoolsServiceProvider"
+                "TimurTurdyev\\SimpleSeo\\Laravel\\SimpleSeoServiceProvider"
             ],
             "aliases": {
-                "Seo": "TimurTurdyev\\Seotools\\Laravel\\Facades\\Seo"
+                "Seo": "TimurTurdyev\\SimpleSeo\\Laravel\\Facades\\Seo"
             }
         }
     },

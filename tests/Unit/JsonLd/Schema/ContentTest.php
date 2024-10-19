@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\JsonLd\Schema\Schema;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;
 
 it('builds an article with a person author and iso dates', function (): void {
     $article = Schema::article()

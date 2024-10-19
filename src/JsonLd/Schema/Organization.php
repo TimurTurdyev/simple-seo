@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\JsonLd\Schema;
+namespace TimurTurdyev\SimpleSeo\JsonLd\Schema;
 
 final class Organization extends AbstractType
 {

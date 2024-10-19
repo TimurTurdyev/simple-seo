@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Contracts;
+namespace TimurTurdyev\SimpleSeo\Contracts;
 
-use TimurTurdyev\Seotools\SeoData;
+use TimurTurdyev\SimpleSeo\SeoData;
 
 interface HasSeo
 {

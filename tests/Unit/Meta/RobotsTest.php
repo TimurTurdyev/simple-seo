@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Meta\MaxImagePreview;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MaxImagePreview;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
 it('renders no robots tag without directives', function (): void {
     expect((new MetaBuilder())->render())->toBe('');

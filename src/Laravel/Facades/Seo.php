@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\Laravel\Facades;
+namespace TimurTurdyev\SimpleSeo\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use TimurTurdyev\Seotools\SeoManager;
+use TimurTurdyev\SimpleSeo\SeoManager;
 
 /**
- * @see \TimurTurdyev\Seotools\SeoManager
+ * @see \TimurTurdyev\SimpleSeo\SeoManager
  *
  * @method static SeoManager title(string $title)
  * @method static SeoManager description(string $description)
  * @method static SeoManager image(string $url)
  * @method static SeoManager canonical(string $url)
  * @method static SeoManager noindex()
- * @method static SeoManager apply(\TimurTurdyev\Seotools\SeoData|\TimurTurdyev\Seotools\Contracts\HasSeo $source)
- * @method static \TimurTurdyev\Seotools\Meta\MetaBuilder meta()
- * @method static \TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder openGraph()
- * @method static \TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder twitterCard()
- * @method static \TimurTurdyev\Seotools\JsonLd\JsonLdBuilder jsonLd()
+ * @method static SeoManager apply(\TimurTurdyev\SimpleSeo\SeoData|\TimurTurdyev\SimpleSeo\Contracts\HasSeo $source)
+ * @method static \TimurTurdyev\SimpleSeo\Meta\MetaBuilder meta()
+ * @method static \TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder openGraph()
+ * @method static \TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder twitterCard()
+ * @method static \TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder jsonLd()
  * @method static string render()
  * @method static void reset()
  */

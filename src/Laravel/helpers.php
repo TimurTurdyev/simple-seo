@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\SeoManager;
+use TimurTurdyev\SimpleSeo\SeoManager;
 
 if (! function_exists('seo')) {
     /**

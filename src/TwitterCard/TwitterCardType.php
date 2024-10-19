@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\TwitterCard;
+namespace TimurTurdyev\SimpleSeo\TwitterCard;
 
 enum TwitterCardType: string
 {

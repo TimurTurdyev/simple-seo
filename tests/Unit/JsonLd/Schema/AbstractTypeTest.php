@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\JsonLd\Schema\AbstractType;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\Schema\AbstractType;
 
 function customType(): AbstractType
 {

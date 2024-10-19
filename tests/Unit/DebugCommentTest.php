@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\SeoManager;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardType;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\SeoManager;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardType;
 
 it('reports empty state', function (): void {
     $seo = new SeoManager(
@@ -17,7 +17,7 @@ it('reports empty state', function (): void {
         new JsonLdBuilder(),
     );
 
-    expect($seo->debugComment())->toBe('<!-- seotools: empty -->');
+    expect($seo->debugComment())->toBe('<!-- simple-seo: empty -->');
 });
 
 it('distinguishes page values from defaults without exposing content', function (): void {
@@ -35,7 +35,7 @@ it('distinguishes page values from defaults without exposing content', function 
     $comment = $seo->debugComment();
 
     expect($comment)->toBe(
-        '<!-- seotools: meta.title=page, meta.description=default, '
+        '<!-- simple-seo: meta.title=page, meta.description=default, '
         . 'og.title=page, og.type=default, og.site_name=default, '
         . 'twitter.card=default, twitter.site=page, twitter.title=page, '
         . 'jsonld.entities=2 -->'

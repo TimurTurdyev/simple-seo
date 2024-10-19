@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace TimurTurdyev\Seotools\OpenGraph;
+namespace TimurTurdyev\SimpleSeo\OpenGraph;
 
-use TimurTurdyev\Seotools\Contracts\Section;
-use TimurTurdyev\Seotools\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Contracts\Section;
+use TimurTurdyev\SimpleSeo\Support\Escaper;
 
 final class OpenGraphBuilder implements Section
 {

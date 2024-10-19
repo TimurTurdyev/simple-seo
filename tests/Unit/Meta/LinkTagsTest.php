@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
 it('renders the canonical link', function (): void {
     expect((new MetaBuilder())->canonical('https://example.com/page')->render())

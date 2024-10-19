@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Support\Escaper;
 
 it('escapes html tags', function (): void {
     expect(Escaper::html('<script>alert(1)</script>'))

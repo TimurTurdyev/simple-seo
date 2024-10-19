@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Meta\MaxImagePreview;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MaxImagePreview;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
 it('renders all tags in the fixed section order', function (): void {
     $meta = (new MetaBuilder(titleSuffix: ' - Shop'))

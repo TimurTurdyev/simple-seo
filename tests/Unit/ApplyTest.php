@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\Seotools\Contracts\HasSeo;
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\JsonLd\Schema\Schema;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\SeoData;
-use TimurTurdyev\Seotools\SeoManager;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\Contracts\HasSeo;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\SeoData;
+use TimurTurdyev\SimpleSeo\SeoManager;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 
 function applyManager(): SeoManager
 {
