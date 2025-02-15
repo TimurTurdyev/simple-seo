@@ -41,6 +41,21 @@ final class Schema
         return new Person();
     }
 
+    public static function qaPage(): QaPage
+    {
+        return new QaPage();
+    }
+
+    public static function question(): Question
+    {
+        return new Question();
+    }
+
+    public static function answer(): Answer
+    {
+        return new Answer();
+    }
+
     public static function breadcrumbs(): Breadcrumbs
     {
         return new Breadcrumbs();
