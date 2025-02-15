@@ -1,6 +1,6 @@
-![seotools](.github/banner.svg)
+![simple-seo](.github/banner.svg)
 
-# seotools
+# simple-seo
 
 Meta-теги, Open Graph, карточки Twitter/X и JSON-LD для PHP 8.2+. Ядро без зависимостей, слой для Laravel 11 в том же пакете.
 
@@ -15,13 +15,13 @@ JSON-LD собирается коллекцией. Каждый `add()` это �
 ## Установка
 
 ```bash
-composer require timur-turdyev/seotools
+composer require timurturdyev/simple-seo
 ```
 
 В Laravel провайдер и фасад подхватятся сами. Конфиг с дефолтами публикуется по желанию:
 
 ```bash
-php artisan vendor:publish --tag=seotools-config
+php artisan vendor:publish --tag=simple-seo-config
 ```
 
 ## Laravel
@@ -82,11 +82,11 @@ seo()->apply($product);
 Хелпера `seo()` и директивы тут нет, остальной API тот же. Собери менеджер при бутстрапе:
 
 ```php
-use TimurTurdyev\Seotools\JsonLd\JsonLdBuilder;
-use TimurTurdyev\Seotools\Meta\MetaBuilder;
-use TimurTurdyev\Seotools\OpenGraph\OpenGraphBuilder;
-use TimurTurdyev\Seotools\SeoManager;
-use TimurTurdyev\Seotools\TwitterCard\TwitterCardBuilder;
+use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
+use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
+use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\SeoManager;
+use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 
 $seo = new SeoManager(
     new MetaBuilder(defaultTitle: 'Мой сайт', titleSuffix: ' - Мой сайт'),
@@ -110,10 +110,10 @@ $seo = new SeoManager(
 
 ## Схемы JSON-LD
 
-Готовые билдеры: Product, Offer, AggregateOffer, AggregateRating, Article, BlogPosting, Person, BreadcrumbList, Organization, WebSite, LocalBusiness.
+Готовые билдеры: Product, Offer, AggregateOffer, AggregateRating, Article, BlogPosting, Person, QAPage, Question, Answer, BreadcrumbList, Organization, WebSite, LocalBusiness.
 
 ```php
-use TimurTurdyev\Seotools\JsonLd\Schema\Schema;
+use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;
 
 seo()->jsonLd()->add(
     Schema::product()
@@ -131,6 +131,40 @@ seo()->jsonLd()->add(
 
 Позиции хлебных крошек нумеруются сами. Под типы, которые Google перестал показывать (FAQ и подобные), билдеров нет: экзотику передавай массивом или через `->property()`.
 
+Для страниц вопрос-ответ есть связка QAPage:
+
+```php
+seo()->jsonLd()->add(
+    Schema::qaPage()->question(
+        Schema::question()
+            ->name('Как выбрать кресло руководителя?')
+            ->author('Иван')
+            ->acceptedAnswer(
+                Schema::answer()->text('Смотрите на механизм качания.')->upvoteCount(12)
+            )
+            ->suggestedAnswer(Schema::answer()->text('Берите с поясничным упором.'))
+    )
+);
+```
+
+`answerCount` подставится сам из числа размеченных ответов, явный `->answerCount()` сильнее. Строка в `author()` превращается в Person, готовые Person и Organization проходят как есть. По правилам Google такая разметка валидна на странице, где главное содержимое - один вопрос с ответами.
+
+Сущность страницы можно собрать из уже заданных значений, не дублируя их:
+
+```php
+seo()->title($title)->description($description)->canonical(request()->url());
+
+seo()->jsonLd()->fromPage('Product', [
+    'offers' => $product->type === 'product'
+        ? Schema::offer()->price($minPrice)->priceCurrency('RUB')->inStock()
+        : null,
+]);
+```
+
+`fromPage()` при рендере подставит `name` из title (без суффикса), `description`, `image` из og-картинок и `url` из canonical. Второй аргумент дополняет и перекрывает, null-поля выпадают из JSON, поэтому условные куски пишутся тернарником. Работает с любым типом от Thing: Article, Recipe, Event и так далее.
+
+Два уточнения. Сущности сайта (Organization, WebSite, LocalBusiness) через `fromPage()` собирать не надо - он возьмёт заголовок страницы вместо имени организации; их добавляй обычным `add()` в layout. Типы с нестандартными обязательными полями (JobPosting хочет `title`, VideoObject хочет `thumbnailUrl`) добирай через второй аргумент.
+
 ## Миграция с artesaos/seotools
 
 Таблица соответствий вызовов, маппинг конфига и отличия поведения: `docs/migration-from-artesaos.md`.
@@ -147,4 +181,4 @@ composer lint
 
 ## English
 
-Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`. Migration notes live in `docs/migration-from-artesaos.md`.
+Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. `jsonLd()->fromPage('Product', $overrides)` builds a page entity from the already set title, description, image and canonical at render time. Typed QAPage, Question and Answer builders cover Q&A pages, answerCount is derived from the marked up answers unless set explicitly. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`. Migration notes live in `docs/migration-from-artesaos.md`.
