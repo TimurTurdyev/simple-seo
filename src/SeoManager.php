@@ -8,6 +8,7 @@ use TimurTurdyev\SimpleSeo\Contracts\HasSeo;
 use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
 use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
+use TimurTurdyev\SimpleSeo\Support\Tag;
 use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 
 final class SeoManager
@@ -138,17 +139,64 @@ final class SeoManager
 
     public function render(): string
     {
-        $fragments = [];
+        return Tag::join($this->tagList());
+    }
 
-        foreach ([$this->meta, $this->openGraph, $this->twitterCard, $this->jsonLd] as $section) {
-            $html = $section->render();
+    /**
+     * Every head tag as data, in render() order: for a client-side head
+     * (React, Vue) that sets the tags itself instead of printing HTML.
+     *
+     * @return list<array{tag: string, attrs: array<string, string>, text?: string}>
+     */
+    public function tags(): array
+    {
+        return array_map(static fn (Tag $tag): array => $tag->toArray(), $this->tagList());
+    }
 
-            if ($html !== '') {
-                $fragments[] = $html;
-            }
-        }
+    /**
+     * The page head by meaning rather than by tag: resolved values plus the
+     * full tag list.
+     *
+     * @return array{
+     *     title: ?string,
+     *     description: ?string,
+     *     canonical: ?string,
+     *     robots: ?string,
+     *     openGraph: list<array{property: string, content: string}>,
+     *     twitter: list<array{name: string, content: string}>,
+     *     jsonLd: array<mixed>|null,
+     *     tags: list<array{tag: string, attrs: array<string, string>, text?: string}>
+     * }
+     */
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->meta->resolvedTitle(),
+            'description' => $this->meta->resolvedDescription(),
+            'canonical' => $this->meta->canonicalUrl(),
+            'robots' => $this->meta->robotsDirective(),
+            'openGraph' => array_map(
+                static fn (Tag $tag): array => ['property' => $tag->attrs['property'], 'content' => $tag->attrs['content']],
+                $this->openGraph->tags(),
+            ),
+            'twitter' => array_map(
+                static fn (Tag $tag): array => ['name' => $tag->attrs['name'], 'content' => $tag->attrs['content']],
+                $this->twitterCard->tags(),
+            ),
+            'jsonLd' => $this->jsonLd->payload(),
+            'tags' => $this->tags(),
+        ];
+    }
 
-        return implode("\n", $fragments);
+    /** @return list<Tag> */
+    private function tagList(): array
+    {
+        return [
+            ...$this->meta->tags(),
+            ...$this->openGraph->tags(),
+            ...$this->twitterCard->tags(),
+            ...$this->jsonLd->tags(),
+        ];
     }
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TimurTurdyev\SimpleSeo\OpenGraph;
 
 use TimurTurdyev\SimpleSeo\Contracts\Section;
-use TimurTurdyev\SimpleSeo\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Support\Tag;
 
 final class OpenGraphBuilder implements Section
 {
@@ -125,6 +125,16 @@ final class OpenGraphBuilder implements Section
 
     public function render(): string
     {
+        return Tag::join($this->tags());
+    }
+
+    /**
+     * The section as data, in output order; render() prints the same tags.
+     *
+     * @return list<Tag>
+     */
+    public function tags(): array
+    {
         $tags = [];
 
         $this->push($tags, 'og:title', $this->title);
@@ -149,7 +159,7 @@ final class OpenGraphBuilder implements Section
             $this->push($tags, $property['property'], $property['content']);
         }
 
-        return implode("\n", $tags);
+        return $tags;
     }
 
     public function reset(): void
@@ -201,13 +211,16 @@ final class OpenGraphBuilder implements Section
     /**
      * @param  list<string>  $tags
      */
+    /**
+     * @param  list<Tag>  $tags
+     */
     private function push(array &$tags, string $property, ?string $content): void
     {
         if ($content === null || $content === '') {
             return;
         }
 
-        $tags[] = '<meta property="' . Escaper::html($property) . '" content="' . Escaper::html($content) . '">';
+        $tags[] = new Tag('meta', ['property' => $property, 'content' => $content]);
     }
 
     private function resolve(?string $value, ?string $default): ?string

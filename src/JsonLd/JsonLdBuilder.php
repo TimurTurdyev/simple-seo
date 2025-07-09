@@ -7,6 +7,7 @@ namespace TimurTurdyev\SimpleSeo\JsonLd;
 use Closure;
 use JsonSerializable;
 use TimurTurdyev\SimpleSeo\Contracts\Section;
+use TimurTurdyev\SimpleSeo\Support\Tag;
 
 final class JsonLdBuilder implements Section
 {
@@ -76,19 +77,42 @@ final class JsonLdBuilder implements Section
 
     public function render(): string
     {
+        return Tag::join($this->tags());
+    }
+
+    /**
+     * The script element as data: empty when there is nothing to mark up.
+     *
+     * @return list<Tag>
+     */
+    public function tags(): array
+    {
+        $payload = $this->payload();
+
+        if ($payload === null) {
+            return [];
+        }
+
+        return [new Tag('script', ['type' => 'application/ld+json'], json_encode($payload, self::JSON_FLAGS))];
+    }
+
+    /**
+     * The document that goes into the script element: one entity with
+     * its @context, or an @graph of several; null when there is none.
+     *
+     * @return array<mixed>|null
+     */
+    public function payload(): ?array
+    {
         $entities = [...$this->entities, ...array_map($this->resolvePageEntity(...), $this->pageEntities)];
 
         if ($entities === []) {
-            return '';
+            return null;
         }
 
-        $payload = count($entities) === 1
+        return count($entities) === 1
             ? ['@context' => self::CONTEXT] + $entities[0]
             : ['@context' => self::CONTEXT, '@graph' => $entities];
-
-        $json = json_encode($payload, self::JSON_FLAGS);
-
-        return '<script type="application/ld+json">' . $json . '</script>';
     }
 
     public function count(): int
