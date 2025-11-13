@@ -137,7 +137,7 @@ seo()->toArray();
 
 ## Схемы JSON-LD
 
-Готовые билдеры: Product, Offer, AggregateOffer, AggregateRating, Article, BlogPosting, Person, QAPage, Question, Answer, BreadcrumbList, Organization, WebSite, LocalBusiness.
+Готовые билдеры: Product, ProductGroup, Offer, AggregateOffer, AggregateRating, Brand, Article, BlogPosting, VideoObject, Person, QAPage, Question, Answer, BreadcrumbList, ItemList, Organization, WebSite, LocalBusiness.
 
 ```php
 use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;

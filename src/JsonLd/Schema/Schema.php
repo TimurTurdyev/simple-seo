@@ -26,6 +26,26 @@ final class Schema
         return new AggregateRating();
     }
 
+    public static function productGroup(): ProductGroup
+    {
+        return new ProductGroup();
+    }
+
+    public static function brand(): Brand
+    {
+        return new Brand();
+    }
+
+    public static function itemList(): ItemList
+    {
+        return new ItemList();
+    }
+
+    public static function videoObject(): VideoObject
+    {
+        return new VideoObject();
+    }
+
     public static function article(): Article
     {
         return new Article('Article');

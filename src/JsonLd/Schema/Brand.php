@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace TimurTurdyev\SimpleSeo\JsonLd\Schema;
+
+final class Brand extends AbstractType
+{
+    public function __construct()
+    {
+        parent::__construct('Brand');
+    }
+
+    public function name(string $name): self
+    {
+        return $this->set('name', $name);
+    }
+
+    public function url(string $url): self
+    {
+        return $this->set('url', $url);
+    }
+
+    public function logo(string $url): self
+    {
+        return $this->set('logo', $url);
+    }
+}

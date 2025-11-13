@@ -34,6 +34,16 @@ abstract class AbstractType implements JsonSerializable
         return ['@type' => $this->type] + $this->properties;
     }
 
+    /**
+     * The entity as plain nested arrays: nested types are serialized too.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(): array
+    {
+        return array_map(self::unwrap(...), $this->jsonSerialize());
+    }
+
     protected function set(string $name, mixed $value): static
     {
         if ($value === null) {
@@ -67,5 +77,14 @@ abstract class AbstractType implements JsonSerializable
     private function normalize(mixed $value): mixed
     {
         return $value instanceof DateTimeInterface ? $value->format('c') : $value;
+    }
+
+    private static function unwrap(mixed $value): mixed
+    {
+        if ($value instanceof JsonSerializable) {
+            $value = $value->jsonSerialize();
+        }
+
+        return is_array($value) ? array_map(self::unwrap(...), $value) : $value;
     }
 }
