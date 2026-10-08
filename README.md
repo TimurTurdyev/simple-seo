@@ -108,6 +108,33 @@ $seo = new SeoManager(
 
 Под PHP-FPM больше ничего не требуется. Под RoadRunner, Swoole и в прочих воркерах вызывай `$seo->reset()` между запросами или создавай свежий инстанс. В Symfony и Yii регистрируй фабрику в контейнере и бери дефолты из своего конфига. Классы из `src/Laravel/` в таких проектах не загружаются, функция `seo()` объявлена через `function_exists` и никому не мешает. В Laravel менеджер привязан как scoped, Octane сбрасывает его сам.
 
+## Голова данными
+
+Когда голову ставит не шаблон, а клиент (Inertia + React, Vue), разметка
+не нужна - нужны теги данными. Их отдают два метода, из тех же значений,
+что печатает `render()`:
+
+```php
+seo()->tags();
+// [
+//   ['tag' => 'title', 'attrs' => [], 'text' => 'Стол руководителя'],
+//   ['tag' => 'meta', 'attrs' => ['name' => 'description', 'content' => '...']],
+//   ['tag' => 'link', 'attrs' => ['rel' => 'canonical', 'href' => 'https://...']],
+//   ['tag' => 'meta', 'attrs' => ['property' => 'og:title', 'content' => '...']],
+//   ['tag' => 'script', 'attrs' => ['type' => 'application/ld+json'], 'text' => '{...}'],
+// ]
+
+seo()->toArray();
+// title, description, canonical, robots, openGraph (property/content),
+// twitter (name/content), jsonLd (документ целиком или null) и tags.
+```
+
+Значения в данных не экранированы: экранирует тот, кто рисует. JSON-LD
+в `text` уже безопасен для тега `script` (`</script>` в строке закодирован).
+Порядок тегов тот же, что у `render()`. По секциям то же самое -
+`meta()->tags()`, `openGraph()->tags()`, `twitterCard()->tags()`,
+`jsonLd()->tags()` и `jsonLd()->payload()`.
+
 ## Схемы JSON-LD
 
 Готовые билдеры: Product, Offer, AggregateOffer, AggregateRating, Article, BlogPosting, Person, QAPage, Question, Answer, BreadcrumbList, Organization, WebSite, LocalBusiness.
@@ -181,4 +208,4 @@ composer lint
 
 ## English
 
-Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11/12 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. `jsonLd()->fromPage('Product', $overrides)` builds a page entity from the already set title, description, image and canonical at render time. Typed QAPage, Question and Answer builders cover Q&A pages, answerCount is derived from the marked up answers unless set explicitly. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`. Migration notes live in `docs/migration-from-artesaos.md`.
+Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11/12 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. `jsonLd()->fromPage('Product', $overrides)` builds a page entity from the already set title, description, image and canonical at render time. Typed QAPage, Question and Answer builders cover Q&A pages, answerCount is derived from the marked up answers unless set explicitly. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`, or hand the head to a client renderer as data with `tags()` / `toArray()` (same values, unescaped). Migration notes live in `docs/migration-from-artesaos.md`.

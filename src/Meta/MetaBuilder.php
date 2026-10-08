@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TimurTurdyev\SimpleSeo\Meta;
 
 use TimurTurdyev\SimpleSeo\Contracts\Section;
-use TimurTurdyev\SimpleSeo\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Support\Tag;
 
 final class MetaBuilder implements Section
 {
@@ -155,43 +155,60 @@ final class MetaBuilder implements Section
 
     public function render(): string
     {
+        return Tag::join($this->tags());
+    }
+
+    /**
+     * The section as data, in output order; render() prints the same tags.
+     *
+     * @return list<Tag>
+     */
+    public function tags(): array
+    {
         $tags = [];
 
         $title = $this->resolvedTitle();
         if ($title !== null) {
-            $tags[] = '<title>' . Escaper::html($title) . '</title>';
+            $tags[] = new Tag('title', text: $title);
         }
 
         $description = $this->resolvedDescription();
         if ($description !== null) {
-            $tags[] = '<meta name="description" content="' . Escaper::html($description) . '">';
+            $tags[] = new Tag('meta', ['name' => 'description', 'content' => $description]);
         }
 
-        if ($this->robots !== []) {
-            $tags[] = '<meta name="robots" content="' . $this->robotsContent() . '">';
+        $robots = $this->robotsDirective();
+        if ($robots !== null) {
+            $tags[] = new Tag('meta', ['name' => 'robots', 'content' => $robots]);
         }
 
         if ($this->isFilled($this->canonical)) {
-            $tags[] = '<link rel="canonical" href="' . Escaper::html($this->canonical) . '">';
+            $tags[] = new Tag('link', ['rel' => 'canonical', 'href' => $this->canonical]);
         }
 
         if ($this->isFilled($this->prev)) {
-            $tags[] = '<link rel="prev" href="' . Escaper::html($this->prev) . '">';
+            $tags[] = new Tag('link', ['rel' => 'prev', 'href' => $this->prev]);
         }
 
         if ($this->isFilled($this->next)) {
-            $tags[] = '<link rel="next" href="' . Escaper::html($this->next) . '">';
+            $tags[] = new Tag('link', ['rel' => 'next', 'href' => $this->next]);
         }
 
         foreach ($this->alternates as $hreflang => $url) {
-            $tags[] = '<link rel="alternate" hreflang="' . Escaper::html($hreflang) . '" href="' . Escaper::html($url) . '">';
+            $tags[] = new Tag('link', ['rel' => 'alternate', 'hreflang' => (string) $hreflang, 'href' => $url]);
         }
 
         foreach ($this->verifications as $name => $content) {
-            $tags[] = '<meta name="' . Escaper::html($name) . '" content="' . Escaper::html($content) . '">';
+            $tags[] = new Tag('meta', ['name' => (string) $name, 'content' => $content]);
         }
 
-        return implode("\n", $tags);
+        return $tags;
+    }
+
+    /** The robots directive line, or null when the page sets none. */
+    public function robotsDirective(): ?string
+    {
+        return $this->robots === [] ? null : $this->robotsContent();
     }
 
     public function reset(): void

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TimurTurdyev\SimpleSeo\TwitterCard;
 
 use TimurTurdyev\SimpleSeo\Contracts\Section;
-use TimurTurdyev\SimpleSeo\Support\Escaper;
+use TimurTurdyev\SimpleSeo\Support\Tag;
 
 final class TwitterCardBuilder implements Section
 {
@@ -87,8 +87,19 @@ final class TwitterCardBuilder implements Section
      */
     public function render(): string
     {
+        return Tag::join($this->tags());
+    }
+
+    /**
+     * The section as data, in output order; render() prints the same tags.
+     * Empty when the page set nothing for the card.
+     *
+     * @return list<Tag>
+     */
+    public function tags(): array
+    {
         if (! $this->hasExplicitState()) {
-            return '';
+            return [];
         }
 
         $tags = [];
@@ -101,7 +112,7 @@ final class TwitterCardBuilder implements Section
         $this->push($tags, 'twitter:description', $this->description);
         $this->push($tags, 'twitter:image', $this->image);
 
-        return implode("\n", $tags);
+        return $tags;
     }
 
     public function reset(): void
@@ -160,12 +171,15 @@ final class TwitterCardBuilder implements Section
     /**
      * @param  list<string>  $tags
      */
+    /**
+     * @param  list<Tag>  $tags
+     */
     private function push(array &$tags, string $name, ?string $content): void
     {
         if ($content === null || $content === '') {
             return;
         }
 
-        $tags[] = '<meta name="' . $name . '" content="' . Escaper::html($content) . '">';
+        $tags[] = new Tag('meta', ['name' => $name, 'content' => $content]);
     }
 }
