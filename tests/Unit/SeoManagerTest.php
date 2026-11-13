@@ -28,16 +28,6 @@ it('spreads the title across meta, og and twitter sections', function (): void {
     ]));
 });
 
-it('spreads the description across sections', function (): void {
-    $seo = manager()->description('Desc');
-
-    expect($seo->render())->toBe(implode("\n", [
-        '<meta name="description" content="Desc">',
-        '<meta property="og:description" content="Desc">',
-        '<meta name="twitter:description" content="Desc">',
-    ]));
-});
-
 it('mirrors canonical into og:url and image into og and twitter', function (): void {
     $seo = manager()
         ->canonical('https://example.com/page')

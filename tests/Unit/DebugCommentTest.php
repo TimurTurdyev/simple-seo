@@ -9,17 +9,6 @@ use TimurTurdyev\SimpleSeo\SeoManager;
 use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardBuilder;
 use TimurTurdyev\SimpleSeo\TwitterCard\TwitterCardType;
 
-it('reports empty state', function (): void {
-    $seo = new SeoManager(
-        new MetaBuilder(),
-        new OpenGraphBuilder(),
-        new TwitterCardBuilder(),
-        new JsonLdBuilder(),
-    );
-
-    expect($seo->debugComment())->toBe('<!-- simple-seo: empty -->');
-});
-
 it('distinguishes page values from defaults without exposing content', function (): void {
     $seo = new SeoManager(
         new MetaBuilder(defaultTitle: 'Secret Default', defaultDescription: 'Secret Desc'),

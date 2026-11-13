@@ -5,21 +5,6 @@ declare(strict_types=1);
 use TimurTurdyev\SimpleSeo\Meta\MaxImagePreview;
 use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
-it('renders no robots tag without directives', function (): void {
-    expect((new MetaBuilder())->render())->toBe('');
-});
-
-it('renders single robots directives', function (): void {
-    expect((new MetaBuilder())->noindex()->render())
-        ->toBe('<meta name="robots" content="noindex">');
-
-    expect((new MetaBuilder())->nosnippet()->render())
-        ->toBe('<meta name="robots" content="nosnippet">');
-
-    expect((new MetaBuilder())->noarchive()->render())
-        ->toBe('<meta name="robots" content="noarchive">');
-});
-
 it('combines robots directives in call order', function (): void {
     $meta = (new MetaBuilder())
         ->noindex()

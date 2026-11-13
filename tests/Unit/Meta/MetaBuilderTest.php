@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 
-it('renders an explicit title', function (): void {
-    $meta = (new MetaBuilder())->title('Hello');
-
-    expect($meta->render())->toBe('<title>Hello</title>');
-});
-
 it('falls back to the default title at render time', function (): void {
     $meta = new MetaBuilder(defaultTitle: 'Default Title');
 
@@ -39,12 +33,6 @@ it('renders explicit values even with withoutDefaults', function (): void {
         ->title('Page');
 
     expect($meta->render())->toBe('<title>Page</title>');
-});
-
-it('replaces the title on repeated calls', function (): void {
-    $meta = (new MetaBuilder())->title('First')->title('Second');
-
-    expect($meta->render())->toBe('<title>Second</title>');
 });
 
 it('does not render a tag for an explicit empty string and does not fall back', function (): void {

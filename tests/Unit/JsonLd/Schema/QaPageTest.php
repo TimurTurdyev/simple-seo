@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
 use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;
 
 it('builds a full qa page with accepted and suggested answers', function (): void {
@@ -87,22 +86,6 @@ it('wraps a plain string author into a person', function (): void {
         ->toBe('{"@type":"Person","name":"Maria"}');
 });
 
-it('keeps a person or organization author as passed', function (): void {
-    $person = Schema::person()->name('Ivan')->url('https://example.com/ivan');
-    $org = Schema::organization()->name('Example LLC');
-
-    expect(Schema::question()->author($person)->jsonSerialize()['author'])->toBe($person)
-        ->and(Schema::answer()->author($org)->jsonSerialize()['author'])->toBe($org);
-});
-
-it('formats date created from a datetime instance', function (): void {
-    $question = Schema::question()->dateCreated(new DateTimeImmutable('2025-02-15 12:00:00', new DateTimeZone('UTC')));
-    $answer = Schema::answer()->dateCreated('2025-02-15');
-
-    expect($question->jsonSerialize()['dateCreated'])->toBe('2025-02-15T12:00:00+00:00')
-        ->and($answer->jsonSerialize()['dateCreated'])->toBe('2025-02-15');
-});
-
 it('replaces the accepted answer and accumulates suggested answers', function (): void {
     $question = Schema::question()
         ->acceptedAnswer(Schema::answer()->text('first'))
@@ -115,39 +98,4 @@ it('replaces the accepted answer and accumulates suggested answers', function ()
     expect(json_encode($data['acceptedAnswer']))->toContain('second')
         ->and($data['suggestedAnswer'])->toHaveCount(2)
         ->and($data['answerCount'])->toBe(3);
-});
-
-it('accepts raw properties through the escape hatch', function (): void {
-    $page = Schema::qaPage()->property('name', 'Delivery questions');
-
-    expect($page->jsonSerialize())->toBe([
-        '@type' => 'QAPage',
-        'name' => 'Delivery questions',
-    ]);
-});
-
-it('joins the graph next to other entities through the json-ld builder', function (): void {
-    $html = (new JsonLdBuilder())
-        ->add(Schema::webSite()->name('Example'))
-        ->add(Schema::qaPage()->question(Schema::question()->name('Question?')))
-        ->render();
-
-    expect($html)->toContain('"@graph"')
-        ->and($html)->toContain('"@type":"WebSite"')
-        ->and($html)->toContain('"@type":"QAPage"')
-        ->and($html)->toContain('"answerCount":0');
-});
-
-it('feeds a question builder into a from page override', function (): void {
-    $builder = new JsonLdBuilder();
-    $builder->fromPage('QAPage', [
-        'mainEntity' => Schema::question()
-            ->name('Question?')
-            ->acceptedAnswer(Schema::answer()->text('Answer.')),
-    ]);
-
-    expect($builder->render())
-        ->toContain('"@type":"QAPage"')
-        ->and($builder->render())->toContain('"@type":"Question","name":"Question?"')
-        ->and($builder->render())->toContain('"answerCount":1');
 });

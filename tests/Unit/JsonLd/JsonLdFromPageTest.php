@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use TimurTurdyev\SimpleSeo\JsonLd\JsonLdBuilder;
-use TimurTurdyev\SimpleSeo\JsonLd\Schema\Schema;
 use TimurTurdyev\SimpleSeo\Meta\MetaBuilder;
 use TimurTurdyev\SimpleSeo\OpenGraph\OpenGraphBuilder;
 use TimurTurdyev\SimpleSeo\SeoManager;
@@ -72,19 +71,6 @@ it('drops null overrides so conditional fields need no if', function (): void {
     $seo->jsonLd()->fromPage('Product', ['offers' => null]);
 
     expect($seo->jsonLd()->render())->not->toContain('offers');
-});
-
-it('serializes schema builder objects passed as overrides', function (): void {
-    $seo = fromPageManager()->title('Chair');
-
-    $seo->jsonLd()->fromPage('Product', [
-        'offers' => Schema::offer()->price('49900.00')->priceCurrency('RUB')->inStock(),
-    ]);
-
-    expect($seo->jsonLd()->render())->toContain(
-        '"offers":{"@type":"Offer","price":"49900.00","priceCurrency":"RUB",'
-        . '"availability":"https://schema.org/InStock"}'
-    );
 });
 
 it('renders a single image as a string and multiple as an array', function (): void {

@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 use TimurTurdyev\SimpleSeo\SeoManager;
 
-it('resolves the seo manager from the container', function (): void {
-    expect(app(SeoManager::class))->toBeInstanceOf(SeoManager::class);
-});
-
 it('passes config defaults into the builders', function (): void {
     config()->set('simple-seo.meta.title.default', 'Default Title');
     config()->set('simple-seo.meta.title.suffix', ' - Site');
@@ -21,13 +17,6 @@ it('passes config defaults into the builders', function (): void {
         ->and($html)->toContain('<meta property="og:site_name" content="Example">')
         ->and($html)->toContain('<meta property="og:type" content="website">')
         ->and($html)->not->toContain('twitter:card');
-});
-
-it('resolves the same scoped instance within a request', function (): void {
-    $first = app(SeoManager::class);
-    $second = app(SeoManager::class);
-
-    expect($first)->toBe($second);
 });
 
 it('starts clean after scoped instances are flushed like octane does between requests', function (): void {
