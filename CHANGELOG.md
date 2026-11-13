@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1 - 2026-11-13
+
+Laravel 13: tests also run on Testbench 11, the README lists Laravel 11/12/13. No code changes.
+
 ## 2.3.0 - 2025-11-13
 
 Commerce and listing builders: `Schema::productGroup()` (productGroupID, variesBy from short schema.org names or urls without repeats, hasVariant), `Schema::itemList()` (positions continue after `offset()`, repeated urls skipped, numberOfItems defaults to the item count), `Schema::videoObject()` (duration in seconds as `PT{n}S`, a single thumbnail as a string) and `Schema::brand()`. Offer gets `priceValidUntil()` (date only), `seller()`, `eligibleQuantity()` and the `Availability` enum; Product gets `model()`, `category()`, `color()`, `material()`, `size()`, `additionalProperty()` and `inProductGroupWithID()`, its `brand()` accepts a Brand. `Breadcrumbs::items()` adds a list of crumbs (`name`/`title`, `url`/`href`), `ratingValue()` turns a decimal comma into a dot, and every type exports plain nested arrays with `toArray()`. Existing output is unchanged, except a rating passed as "4,5".

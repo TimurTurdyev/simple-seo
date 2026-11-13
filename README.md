@@ -2,7 +2,7 @@
 
 # simple-seo
 
-Meta-теги, Open Graph, карточки Twitter/X и JSON-LD для PHP 8.2+. Ядро без зависимостей, слой для Laravel 11/12 в том же пакете.
+Meta-теги, Open Graph, карточки Twitter/X и JSON-LD для PHP 8.2+. Ядро без зависимостей, слой для Laravel 11/12/13 в том же пакете.
 
 Я написал этот пакет на замену artesaos/seotools в своих проектах. Из старого пакета взята только идея, реализация и API новые. Две вещи, которые меня в нём раздражали, здесь устроены иначе:
 
@@ -208,4 +208,4 @@ composer lint
 
 ## English
 
-Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11/12 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. `jsonLd()->fromPage('Product', $overrides)` builds a page entity from the already set title, description, image and canonical at render time. Typed QAPage, Question and Answer builders cover Q&A pages, answerCount is derived from the marked up answers unless set explicitly. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`, or hand the head to a client renderer as data with `tags()` / `toArray()` (same values, unescaped). Migration notes live in `docs/migration-from-artesaos.md`.
+Meta, Open Graph, Twitter/X cards and JSON-LD for PHP. Plain PHP 8.2+ core with zero runtime deps, lazy Laravel 11/12/13 layer in the same package. Config values resolve as render-time fallbacks, every `jsonLd()->add()` is an independent entity, robots directives are typed methods, output is escaped. `jsonLd()->fromPage('Product', $overrides)` builds a page entity from the already set title, description, image and canonical at render time. Typed QAPage, Question and Answer builders cover Q&A pages, answerCount is derived from the marked up answers unless set explicitly. Install via composer, set page values with `seo()`, print with `@seo` or `$seo->render()`, or hand the head to a client renderer as data with `tags()` / `toArray()` (same values, unescaped). Migration notes live in `docs/migration-from-artesaos.md`.
